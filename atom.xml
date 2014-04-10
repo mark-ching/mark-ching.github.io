@@ -4,7 +4,7 @@
   <title><![CDATA[bingo]]></title>
   <link href="http://mark-ching.github.io/atom.xml" rel="self"/>
   <link href="http://mark-ching.github.io/"/>
-  <updated>2014-04-10T20:07:49+08:00</updated>
+  <updated>2014-04-10T20:20:27+08:00</updated>
   <id>http://mark-ching.github.io/</id>
   <author>
     <name><![CDATA[Jing1st]]></name>
@@ -12,5 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GoPoints:流程和函数]]></title>
+    <link href="http://mark-ching.github.io/blog/2014/04/10/gopoints-liu-cheng-he-han-shu/"/>
+    <updated>2014-04-10T20:19:32+08:00</updated>
+    <id>http://mark-ching.github.io/blog/2014/04/10/gopoints-liu-cheng-he-han-shu</id>
+    <content type="html"><![CDATA[<ol>
+<li>在<code>defer</code>后指定的函数会在函数退出前调用。</li>
+<li><p>传指针有什么好处：</p>
+
+<ul>
+<li>传指针使得多个函数能操作同一个对象。</li>
+<li>传指针比较轻量级 (8bytes)</li>
+<li>Go语言中string，slice，map这三种类型的实现机制类似指针，
+所以可以直接传递，而不用取地址后传递指针。</li>
+</ul>
+</li>
+<li><p><code>:=</code>声明变量只能用在方法里，全局变量必须用<code>var</code>定义。</p></li>
+<li><code>defer</code>(延迟)是<code>后进先出</code>的。例如：</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">defer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="c1">//输出的结果应该是：4，3，2，1，0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>慎用<code>goto</code>,<code>panic</code>,<code>recover</code>.</li>
+<li>Go中两个保留函数：<code>init</code>、<code>main</code>。
+
+<ul>
+<li>均不能有任何参数和返回值。</li>
+<li>建议每个package中每个文件只写一个<code>init</code>函数。</li>
+<li>多个包同时导入相同包时，编译时只会导入一次。</li>
+<li><code>main</code>函数在执行时的顺序：
+
+<ol>
+<li> <code>import</code>所有相关包</li>
+<li> 初始化包级常量和变量</li>
+<li> 执行<code>main</code>中的<code>init</code>函数（如果有的话）</li>
+<li> 执行<code>main</code>函数</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><code>import</code>包时的三种操作：</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">import</span> <span class="p">(</span>
+</span><span class='line'>    <span class="s">&quot;fmt&quot;</span>       <span class="c1">//普通，fmt.println(&quot;hello&quot;)</span>
+</span><span class='line'>    <span class="p">.</span> <span class="s">&quot;fmt&quot;</span>     <span class="c1">//点操作，Println(&quot;hello&quot;)</span>
+</span><span class='line'>    <span class="nx">f</span> <span class="s">&quot;fmt&quot;</span>     <span class="c1">//别名操作，f.Println(&quot;hello&quot;)</span>
+</span><span class='line'>    <span class="nx">_</span> <span class="s">&quot;github.com/mark-ching/golang&quot;</span> <span class="c1">//_操作，调用该包的`init`函数</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+]]></content>
+  </entry>
   
 </feed>
